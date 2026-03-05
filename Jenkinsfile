@@ -13,9 +13,14 @@ pipeline {
         API_KEY = credentials('my-api-key')
     }
     parameters {
-    string(name:'DEPLOY_ENV', defaultValue: 'master')
-    choice(name:'TARGET_ENV', choices: ['dev', 'staging', 'prod'])  
-    booleanParam(name:'RUN_TESTS', defaultValue: true)
+        string(name:'DEPLOY_ENV', defaultValue: 'master')
+        choice(name:'TARGET_ENV', choices: ['dev', 'staging', 'prod'])  
+        booleanParam(name:'RUN_TESTS', defaultValue: true)
+    }
+    options {
+        disableConcurrentBuilds()
+        timeout(time: 5, unit: 'SECONDS')
+        buildDiscarder(logRotator(numToKeepStr: '5'))
     }
     stages {
         stage('Build') {
