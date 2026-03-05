@@ -10,6 +10,7 @@ pipeline {
     environment {
         APP_NAME = 'myapp'
         VERSION = '1.0.0'
+        API_KEY = credentials('my-api-key')
     }
     parameters {
     string(name:'DEPLOY_ENV', defaultValue: 'master')
@@ -67,6 +68,7 @@ pipeline {
         stage('Deliver') {
             steps {
                 echo "HH Deliver....Version: ${VERSION} on Target Environment: ${params.TARGET_ENV}"
+                echo "Using API key: ${API_KEY}"
                 // Only run this specific step if condition is met
                 script {
                     if (params.RUN_TESTS == false) {
