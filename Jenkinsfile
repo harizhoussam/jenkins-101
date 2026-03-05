@@ -52,6 +52,7 @@ pipeline {
                 cd $APP_NAME
                 python3 hello.py
                 '''
+                stash includes: 'test-result.txt', name: 'test-result'
             }
         }
         stage('Deliver') {
