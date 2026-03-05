@@ -25,10 +25,37 @@ pipeline {
                 '''
             }
         }
-        stage('Test') {
+        //This stage runs the steps if the boolean is true
+        stage('Pre - Test') {
             when {
                 expression { return params.RUN_TESTS == true }
             }
+            steps {
+                echo "HH Testing.."
+                sh '''
+                cd $APP_NAME
+                python3 hello.py
+                '''
+            }
+        }
+        //In this stage I will create nested stages. This will allow me to use "when" to only run some tests
+        stage('Test') {
+            stages {
+                stage ('Test-1') {
+                    when {
+                        expression { return params.RUN_TESTS == true }
+                    }
+                    steps {
+                        echo "HH Test - 1"
+                    }
+                }
+                stage ('Test-2') {
+                    steps {
+                        echo "HH Test - 1"
+                    }
+                }
+            }
+            
             steps {
                 echo "HH Testing.."
                 sh '''
