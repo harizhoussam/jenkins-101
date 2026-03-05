@@ -48,6 +48,7 @@ pipeline {
             steps {
                 echo "HH Testing.."
                 sh '''
+                echo "Test Result is written" > test-result.txt
                 cd $APP_NAME
                 python3 hello.py
                 '''
@@ -63,6 +64,12 @@ pipeline {
                         echo "RUN Tests is true in delivery"
                     }
                 }
+
+                unstash 'test-result'
+                echo "I found the STASHED RESULT:"
+                sh '''
+                    cat test-result.txt
+                '''
             }
         }
     }
