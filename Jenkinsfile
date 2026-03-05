@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        node {
+            label 'built-in'  // This forces it to run on your local WSL
+        }
+    }
     triggers {
         pollSCM '* * * * *'
     }
