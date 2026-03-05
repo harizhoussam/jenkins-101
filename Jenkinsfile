@@ -55,6 +55,15 @@ pipeline {
                 stash includes: 'test-result.txt', name: 'test-result'
             }
         }
+        stage('Approve') {
+                input {
+                    message "Approve deployment?"
+                    ok "Deploy"
+                }
+                steps {
+                    echo "Approved Deployment !"
+                }
+        }
         stage('Deliver') {
             steps {
                 echo "HH Deliver....Version: ${VERSION} on Target Environment: ${params.TARGET_ENV}"
