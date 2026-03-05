@@ -7,12 +7,16 @@ pipeline {
     triggers {
         pollSCM '* * * * *'
     }
+    environment {
+        APP_NAME = 'myapp'
+        VERSION = '1.0.0'
+    }
     stages {
         stage('Build') {
             steps {
-                echo "Building.."
+                echo "Building.. ${APP_NAME} "
                 sh '''
-                cd myapp
+                cd $APP_NAME 
                 '''
             }
         }
@@ -20,7 +24,7 @@ pipeline {
             steps {
                 echo "Testing.."
                 sh '''
-                cd myapp
+                cd $APP_NAME
                 python3 hello.py
                 python3 hello.py --name=Brad
                 '''
@@ -28,11 +32,19 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-                echo 'Deliver....'
+                echo "Deliver....Version: ${VERSION}"
                 sh '''
                 echo "doing delivery stuff.."
                 '''
             }
+        }
+    }
+    post {
+        success { echo "Pipeline succeeded! App: ${APP_NAME} ${VERSION} is ready"}
+        failure { echo "Build Failure"}
+        always {
+            echo "Pipeline finished. Cleaning up..."
+            cleanWs() 
         }
     }
 }
