@@ -13,7 +13,7 @@ pipeline {
     }
     parameters {
     string(name:'DEPLOY_ENV', defaultValue: 'master')
-    choice(name:'TARGER_ENV', choices: ['dev', 'staging', 'prod'])  
+    choice(name:'TARGET_ENV', choices: ['dev', 'staging', 'prod'])  
     booleanParam(name:'RUN_TESTS', defaultValue: true)
     }
     stages {
@@ -26,26 +26,31 @@ pipeline {
             }
         }
         stage('Test') {
+            when {
+                expression { return params.RUN_TESTS == true }
+            }
             steps {
                 echo "HH Testing.."
                 sh '''
                 cd $APP_NAME
                 python3 hello.py
-                python3 hello.py --name=Brad
                 '''
             }
         }
         stage('Deliver') {
             steps {
-                echo "HH Deliver....Version: ${VERSION}"
-                sh '''
-                echo "HH doing delivery stuff.."
-                '''
+                echo "HH Deliver....Version: ${VERSION} on Target Environment: ${params.TARGET_ENV}"
+                // Only run this specific step if condition is met
+                script {
+                    if (params.RUN_TESTS == false) {
+                        echo "RUN Tests is true in delivery"
+                    }
+                }
             }
         }
     }
     post {
-        success { echo "HH Pipeline succeeded! App: ${APP_NAME} ${VERSION} is ready"}
+        success { echo "HH Pipeline succeeded! App: ${APP_NAME} ${VERSION} deployed on ${params.DEPLOY_ENV} "}
         failure { echo "HH Build Failure"}
         always {
             echo "HH Pipeline finished. Cleaning up..."
