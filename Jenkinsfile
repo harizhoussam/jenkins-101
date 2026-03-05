@@ -59,6 +59,10 @@ pipeline {
                 input {
                     message "Approve deployment?"
                     ok "Deploy"
+                    parameters {
+                        string(name: 'DEPLOY_NUM', defaultValue: '1', description: 'deploy number')
+                        booleanParam(name: 'RUN_SMOKE_TESTS', defaultValue: true, description: 'Run smoke tests after deploy?')
+                    }
                 }
                 steps {
                     echo "Approved Deployment !"
