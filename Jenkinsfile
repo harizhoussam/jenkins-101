@@ -11,10 +11,15 @@ pipeline {
         APP_NAME = 'myapp'
         VERSION = '1.0.0'
     }
+    parameters {
+    string(name:'DEPLOY_ENV', defaultValue: 'master')
+    choice(name:'TARGER_ENV', choices: ['dev', 'staging', 'prod'])  
+    booleanParam(name:'RUN_TESTS', defaultValue: true)
+    }
     stages {
         stage('Build') {
             steps {
-                echo "Building.. ${APP_NAME} "
+                echo "HH Building.. ${APP_NAME} "
                 sh '''
                 cd $APP_NAME 
                 '''
@@ -22,7 +27,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo "Testing.."
+                echo "HH Testing.."
                 sh '''
                 cd $APP_NAME
                 python3 hello.py
@@ -32,18 +37,18 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-                echo "Deliver....Version: ${VERSION}"
+                echo "HH Deliver....Version: ${VERSION}"
                 sh '''
-                echo "doing delivery stuff.."
+                echo "HH doing delivery stuff.."
                 '''
             }
         }
     }
     post {
-        success { echo "Pipeline succeeded! App: ${APP_NAME} ${VERSION} is ready"}
-        failure { echo "Build Failure"}
+        success { echo "HH Pipeline succeeded! App: ${APP_NAME} ${VERSION} is ready"}
+        failure { echo "HH Build Failure"}
         always {
-            echo "Pipeline finished. Cleaning up..."
+            echo "HH Pipeline finished. Cleaning up..."
             cleanWs() 
         }
     }
