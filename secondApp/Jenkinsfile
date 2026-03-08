@@ -6,7 +6,11 @@ pipeline {
     TARGET_ENV = 'DEV'
     DIR = 'HOME'
   }
-  
+  parameters {
+    string(name: 'TEST_VARIABLE' ,defaultValue: 'TEST123')
+    choice(name: 'USER', choices:['HH','ZZ'])
+    booleanParam(name: 'DEPLOY_NOW', defaultValue: false)
+  }
   stages {
     stage('First'){
       steps {
