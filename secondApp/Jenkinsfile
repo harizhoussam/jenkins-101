@@ -4,6 +4,7 @@ pipeline {
   }
   environment {
     $TARGET_ENV = 'DEV'
+    $DIR = 'HOME'
   }
   
   stages {
@@ -11,13 +12,13 @@ pipeline {
       steps {
         sh ''' echo "hello world !!!">test.txt 
         cat test.txt 
-        echo "The environment is ${TARGET_ENV}'''
+        echo "The environment is $TARGET_ENV'''
       }
     }
 
     stage('Second'){
       steps {
-        echo "HEY"
+        echo "HEY this is the directory: ${DIR}"
       }
     }
   }
