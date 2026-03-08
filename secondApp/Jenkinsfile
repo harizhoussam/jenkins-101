@@ -37,6 +37,14 @@ pipeline {
     }
 
     stage('Third'){
+      input {
+        message "Please Input Details"
+        ok "Deply NOW"
+        prameters { 
+          string(name: 'CHECK' ,defaultValue: 'TEST123')
+          choice(name: 'WHO', choices:['HH','ZZ'])
+        }
+      }
       steps {
         echo "---UNSTASHING NOW test.txt---"
         unstash 'my-stash'
