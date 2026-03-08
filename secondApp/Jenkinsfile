@@ -1,4 +1,7 @@
 pipeline {
+  agent {
+    label 'built-in'
+  }
   stages {
     stage('First'){
       steps {
