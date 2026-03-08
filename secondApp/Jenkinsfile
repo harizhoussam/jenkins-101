@@ -1,0 +1,15 @@
+pipeline {
+  stages {
+    stage('First'){
+      steps {
+        sh ''' echo "hello world">test.txt '''
+      }
+    }
+
+    stage('Second'){
+      steps {
+        echo "HEY"
+      }
+    }
+  }
+}
