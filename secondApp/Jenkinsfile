@@ -13,6 +13,9 @@ pipeline {
   }
   stages {
     stage('First'){
+      when {
+        branch 'master'
+      }
       steps {
         sh ''' echo "hello world !!!">test.txt 
         cat test.txt 
