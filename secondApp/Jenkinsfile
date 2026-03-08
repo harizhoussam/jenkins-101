@@ -11,6 +11,9 @@ pipeline {
     choice(name: 'USER', choices:['HH','ZZ'])
     booleanParam(name: 'DEPLOY_NOW', defaultValue: true)
   }
+  options {
+        disableConcurrentBuilds()
+  }
   stages {
     stage('First'){
       when {
@@ -38,6 +41,11 @@ pipeline {
         echo "---UNSTASHING NOW test.txt---"
         unstash 'my-stash'
         sh ''' cat test.txt'''
+        script {
+          if ($DIR == 'HOME'){
+            echo "THIS IS A SCRIPTED CONDITION !"
+          }
+        }
       }
     }
   }
