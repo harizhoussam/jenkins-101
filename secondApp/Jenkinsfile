@@ -3,8 +3,8 @@ pipeline {
     label 'local-agent'
   }
   environment {
-    $TARGET_ENV = 'DEV'
-    $DIR = 'HOME'
+    TARGET_ENV = 'DEV'
+    DIR = 'HOME'
   }
   
   stages {
