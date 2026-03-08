@@ -12,7 +12,7 @@ pipeline {
       steps {
         sh ''' echo "hello world !!!">test.txt 
         cat test.txt 
-        echo "The environment is $TARGET_ENV'''
+        echo "The environment is $TARGET_ENV"'''
       }
     }
 
