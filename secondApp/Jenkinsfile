@@ -17,14 +17,24 @@ pipeline {
         expression { return params.DEPLOY_NOW }
       }
       steps {
-        sh ''' echo "hello world !!!">test.txt 
-        cat test.txt 
+        sh ''' echo "hello from first stage"
+        echo "The environment is $TARGET_ENV"'''
+      }
+    }
+
+    stages {
+    stage('Second'){
+      when {
+        expression { return params.DEPLOY_NOW }
+      }
+      steps {
+        sh ''' echo "hello from Second Stage !!!">test.txt 
         echo "The environment is $TARGET_ENV"'''
         stash includes: 'test.txt', name: 'my-stash'
       }
     }
 
-    stage('Second'){
+    stage('Third'){
       steps {
         echo "---UNSTASHING NOW test.txt---"
         unstash 'my-stash'
