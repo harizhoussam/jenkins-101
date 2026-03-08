@@ -22,7 +22,6 @@ pipeline {
       }
     }
 
-    stages {
     stage('Second'){
       when {
         expression { return params.DEPLOY_NOW }
