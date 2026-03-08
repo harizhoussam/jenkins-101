@@ -16,13 +16,19 @@ pipeline {
   }
   stages {
     stage('First'){
-      when {
-        expression { return params.DEPLOY_NOW }
-      }
-      steps {
-        sh ''' echo "hello from first stage"
-        echo "The environment is $TARGET_ENV"'''
-      }
+      parallel {
+        stage('F1'){
+          steps {
+            sh ''' echo "hello from F1 !"
+            echo "The environment is $TARGET_ENV"'''
+            }
+          }
+        stage('F2') {
+          steps {
+            echo "HELLO FROM F2"
+          }
+        }
+      }  
     }
 
     stage('Second'){
@@ -40,7 +46,7 @@ pipeline {
       input {
         message "Please Input Details"
         ok "Deply NOW"
-        prameters { 
+        parameters { 
           string(name: 'CHECK' ,defaultValue: 'TEST123')
           choice(name: 'WHO', choices:['HH','ZZ'])
         }
