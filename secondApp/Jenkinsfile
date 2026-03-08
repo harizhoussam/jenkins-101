@@ -9,12 +9,12 @@ pipeline {
   parameters {
     string(name: 'TEST_VARIABLE' ,defaultValue: 'TEST123')
     choice(name: 'USER', choices:['HH','ZZ'])
-    booleanParam(name: 'DEPLOY_NOW', defaultValue: false)
+    booleanParam(name: 'DEPLOY_NOW', defaultValue: true)
   }
   stages {
     stage('First'){
       when {
-        branch 'dev'
+        expression { return params.DEPLOY_NOW }
       }
       steps {
         sh ''' echo "hello world !!!">test.txt 
