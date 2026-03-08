@@ -14,24 +14,27 @@ pipeline {
   stages {
     stage('First'){
       when {
-        branch 'master'
+        branch 'dev'
       }
       steps {
         sh ''' echo "hello world !!!">test.txt 
         cat test.txt 
         echo "The environment is $TARGET_ENV"'''
+        stash includes: 'test.txt', name: 'my-stash'
       }
     }
 
     stage('Second'){
       steps {
-        echo "HEY this is the directory: ${DIR}"
+        echo "---UNSTASHING NOW test.txt---"
+        unstash 'my-stash'
+        sh ''' cat test.txt'''
       }
     }
   }
   post {
     success {echo "Success"}
     failure {echo "Failure"}
-    always {echo "....PIPELINE DONE...."}
+    always {echo "....STAGES DONE...."}
   }
 }
