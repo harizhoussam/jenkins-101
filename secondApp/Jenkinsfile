@@ -29,4 +29,9 @@ pipeline {
       }
     }
   }
+  post {
+    success {echo "Success"}
+    failure {echo "Failure"}
+    always {echo "....PIPELINE DONE...."}
+  }
 }
