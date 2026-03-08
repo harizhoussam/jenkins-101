@@ -42,7 +42,7 @@ pipeline {
         unstash 'my-stash'
         sh ''' cat test.txt'''
         script {
-          if ($DIR == 'HOME'){
+          if (DIR == 'HOME'){
             echo "THIS IS A SCRIPTED CONDITION !"
           }
         }
