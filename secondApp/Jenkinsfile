@@ -2,10 +2,16 @@ pipeline {
   agent {
     label 'local-agent'
   }
+  environment {
+    $TARGET_ENV = 'DEV'
+  }
+  
   stages {
     stage('First'){
       steps {
-        sh ''' echo "hello world">test.txt '''
+        sh ''' echo "hello world !!!">test.txt 
+        cat test.txt 
+        echo "The environment is ${TARGET_ENV}'''
       }
     }
 
