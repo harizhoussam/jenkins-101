@@ -25,5 +25,17 @@ pipeline {
         echo "HEY this is the directory: ${DIR}"
       }
     }
+
+    stage('Third'){
+
+      when {
+        expression {
+          params.USER == 'HH'
+      }
+      steps {
+        sh ''' echo hello '''
+      }
+    }
+
   }
 }
